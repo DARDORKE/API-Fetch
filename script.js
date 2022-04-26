@@ -1,26 +1,40 @@
-function askAge() {
-    return prompt('Quel âge avez-vous ?')
+function askUsername() {
+    return prompt('Quel est votre nom d\'utilisateur ?')
+}
+
+function askMathOperation() {
+    return prompt('Combien font 2 + 2')
 }
 
 function success() {
-    console.log('Vous êtes majeur, vous pouvez continuer votre navigation')
+    console.log('Vous pouvez accéder à l\'application')
 }
 
 function error() {
-    console.log('Vous êtes mineur, vous allez être redirigé vers une autre page')
+    console.log('Restez où vous êtes')
 }
 
-function redirectUser() {
+function checkUsername() {
     return new Promise((resolve, reject) => {
-        let age = askAge()
+        let username = askUsername()
 
-        if (age >= 18){
+        if ('admin' === username) {
             resolve()
-        }
-        else {
+        } else {
             reject()
         }
     })
 }
 
-redirectUser().then(success, error)
+function checkIfIsBot() {
+    return new Promise((resolve, reject) => {
+        let result = askMathOperation()
+        if (4 === parseInt(result)) {
+            resolve()
+        } else {
+            reject()
+        }
+    })
+}
+
+Promise.all([checkUsername(), checkIfIsBot()]).then(success, error)
